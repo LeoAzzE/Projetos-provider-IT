@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ficha cadastral</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form>
+      <fieldset class="wrapper">
+        <div>
+          <strong><h2 class="title">Ficha Cadastral</h2></strong>
+        </div>
+        <div class="wrapperData">
+          <div class="data name">
+            <label>Nome:</label>
+            <input
+              required
+              id="nameInput"
+              maxlength="55"
+              type="text"
+              name="nome"
+              id="nome"
+            />
+          </div>
+
+          <div class="RgAndCpf">
+            <div class="data rg">
+              <label>RG:</label>
+              <input required id="rgInput" maxlength="12" type="text" />
+            </div>
+
+            <div class="data cpf">
+              <label>CPF :.</label>
+              <input required id="cpfInput" maxlength="14" type="text" />
+            </div>
+          </div>
+
+          <div class="data end">
+            <label>Endereço:</label>
+            <input required id="adressInput" maxlength="55" type="text" />
+          </div>
+
+          <div>
+            <div class="sexAndBorn">
+              <div class="data sex">
+                <label>Sexo:</label>
+                <select required id="sexo" name="estado">
+                  <option value="Select">Selecione</option>
+                  <option value="MASC">Masculino</option>
+                  <option value="FEM">Feminino</option>
+                </select>
+              </div>
+              <div class="born data">
+                <label>Nascimento:</label>
+                <input
+                  required
+                  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                  min="1910-01-01"
+                  max="2023-01-01"
+                  required
+                  id="bornInput"
+                  maxlength="10"
+                  type="date"
+                  name="date"
+                  id="date"
+                />
+              </div>
+            </div>
+
+            <div class="data sc">
+              <label>Situação Civil:</label>
+              <label>
+                <input type="radio" name="option" id="solteiro" /> Solteiro(a)
+              </label>
+              <label>
+                <input type="radio" name="option" id="casado" /> Casado(a)
+              </label>
+              <label>
+                <input type="radio" name="option" id="viuvo" /> Viúvo(a)
+              </label>
+            </div>
+          </div>
+        </div>
+        <input value="Limpar Dados" type="button" name="" id="buttonClean" />
+        <input
+          value="incluir"
+          type="button"
+          name="include"
+          id="buttonInclude"
+        />
+      </fieldset>
+    </form>
+
+    <table border="1">
+      <div class="titleTable">
+        <div>Cadastros</div>
+      </div>
+
+      <div class="content">
+        <tr class="header">
+          <th class="id">ID</th>
+          <th class="nameUser">NOME</th>
+          <th class="rgUser">RG</th>
+          <th class="cpfUser">CPF</th>
+          <th class="endUser">ENDERECO</th>
+          <th class="nasc">NASC</th>
+          <th class="scl">SC</th>
+        </tr>
+        <tbody id="tbody">
+          <tr class="dataUser">
+            <td>1</td>
+            <td>Leo</td>
+            <td>2189219</td>
+            <td>192921</td>
+            <td>Rua xavana</td>
+            <td>20/02/1999</td>
+            <td>casado</td>
+          </tr>
+        </tbody>
+      </div>
+    </table>
+
+    <script src="script.js"></script>
+  </body>
+</html>

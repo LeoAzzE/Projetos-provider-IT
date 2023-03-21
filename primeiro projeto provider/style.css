@@ -1,0 +1,70 @@
+:root {
+    --blue1: #0D5188;
+    --blue2: #66C5E3;
+    --blue3: #C7E7F3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+table {
+    gap: 2px;
+    margin: 0 auto;
+    width: 600px;
+}
+
+.title {
+    background-color: #0D5188;
+    color: white;
+    margin: 0 auto;
+    width: 598px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    height: 45px;
+}
+
+.nameCity {
+    background-color: #C7E7F3;
+    
+}
+
+.names {
+    font-weight: bold;
+    background-color: #66C5E3;
+}
+
+.pop {
+    text-align: center;
+}
+
+.pos {
+    background-color: rgb(179, 179, 179);
+    text-align: center;
+}
+
+.colPos {
+    width: 10%;
+    text-align: center;
+}
+
+.colPop {
+    width: 15%;
+    background-color: #C7E7F3;
+    text-align: center;
+}
+
+tr {
+    margin: 2px;
+}
