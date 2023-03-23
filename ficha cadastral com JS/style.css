@@ -182,6 +182,7 @@ tbody tr {
 
 .dataUser {
     word-break: break-all;
+    background-color: var(--blue3);
 }
 
 th, td {

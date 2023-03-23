@@ -7,7 +7,7 @@
     <title>Ficha cadastral</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body id="body">
     <form>
       <fieldset class="wrapper">
         <div>
@@ -48,9 +48,8 @@
               <div class="data sex">
                 <label>Sexo:</label>
                 <select required id="sexo" name="estado">
-                  <option value="Select">Selecione</option>
-                  <option value="MASC">Masculino</option>
-                  <option value="FEM">Feminino</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
                 </select>
               </div>
               <div class="born data">
@@ -73,13 +72,13 @@
             <div class="data sc">
               <label>Situação Civil:</label>
               <label>
-                <input type="radio" name="option" id="solteiro" /> Solteiro(a)
+                <input value="Solteiro" type="radio" name="sc" id="solteiro" /> Solteiro(a)
               </label>
               <label>
-                <input type="radio" name="option" id="casado" /> Casado(a)
+                <input value="Casado" type="radio" name="sc" id="casado" /> Casado(a)
               </label>
               <label>
-                <input type="radio" name="option" id="viuvo" /> Viúvo(a)
+                <input value="Viuvo" type="radio" name="sc" id="viuvo" /> Viúvo(a)
               </label>
             </div>
           </div>
@@ -101,28 +100,27 @@
 
       <div class="content">
         <tr class="header">
-          <th class="id">ID</th>
           <th class="nameUser">NOME</th>
           <th class="rgUser">RG</th>
           <th class="cpfUser">CPF</th>
           <th class="endUser">ENDERECO</th>
           <th class="nasc">NASC</th>
+          <th class="sexo">Sexo</th>
           <th class="scl">SC</th>
         </tr>
-        <tbody id="tbody">
-          <tr class="dataUser">
-            <td>1</td>
+        <tbody class="dataUser" id="tbody">
+          <!-- <tr>
             <td>Leo</td>
             <td>2189219</td>
             <td>192921</td>
             <td>Rua xavana</td>
             <td>20/02/1999</td>
+            <td>Masculino</td>
             <td>casado</td>
-          </tr>
+          </tr> -->
         </tbody>
       </div>
     </table>
-
     <script src="script.js"></script>
   </body>
 </html>
