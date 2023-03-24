@@ -91,6 +91,62 @@ fieldset {
     width: 100%;
 }
 
+.cepAndBairro {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.cityAndComp {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.city {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.city > input {
+    width:  39.3%;
+}
+
+.comp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.comp > input {
+    width:  59%;
+}
+
+.cep {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cep > input {
+    width:  39.3%;
+}
+
+.bairro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.bairro > input {
+    width:  59%;
+}
+
 .end {
     display: flex;
     align-items: center;
@@ -188,4 +244,14 @@ tbody tr {
 th, td {
     width: 100%;
     text-align: center;
+}
+
+td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.redborder {
+    border: 2px solid red;
 }
