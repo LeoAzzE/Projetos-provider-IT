@@ -37,7 +37,8 @@ fieldset {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    gap: 10px;
+    gap: 15px;
+    
 }
 
 .data {
@@ -45,6 +46,7 @@ fieldset {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    
 }
 
 .data > input {
@@ -56,7 +58,17 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
     
+}
+.msgError {
+    font-size: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 135px;
+    display: none;
+    color: #e63636;
+    word-break: normal;
 }
 
 .name > input {
@@ -68,6 +80,7 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .rg > input {
@@ -89,6 +102,7 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .cepAndBairro {
@@ -108,6 +122,7 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .city > input {
@@ -125,11 +140,24 @@ fieldset {
     width:  59%;
 }
 
+.number {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 43%;
+    position: relative;
+}
+
+.number input {
+    width: 30%;
+}
+
 .cep {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .cep > input {
@@ -141,6 +169,7 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .bairro > input {
@@ -152,6 +181,7 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .end > input {
@@ -184,6 +214,7 @@ fieldset {
     justify-content: flex-start;
     gap: 106px;
     width: 100%;
+    position: relative;
 }
 
 
@@ -201,7 +232,7 @@ button {
 table {
     text-align: center;
     margin: 0 auto;
-    width: 600px;
+    width: 850px;
     border-collapse: collapse;
 }
 
@@ -209,7 +240,7 @@ table {
     background-color: var(--blue1);
     color: white;
     margin: 0 auto;
-    width: 600px;
+    width: 850px;
     display: flex;
     justify-content: center;
     align-items: center;
