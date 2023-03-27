@@ -88,15 +88,16 @@
             <div class="sexAndBorn">
               <div class="data sex">
                 <label>Sexo:</label>
-                <select oninput="sexoMsg()" required id="sexo" name="estado">
+                <select class="required" oninput="sexoMsg()" required id="sexo" name="estado">
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
-                  <p class="msgError">Obrigatório</p>
                 </select>
               </div>
               <div class="born data">
                 <label>Nascimento:</label>
                 <input
+                  oninput="nascMsg()"
+                  required
                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                   min="1910-01-01"
                   max="2019-01-01"
@@ -104,6 +105,7 @@
                   maxlength="10"
                   type="date"
                   name="date"
+                  class="required"
                 />
               </div>
             </div>
@@ -111,13 +113,13 @@
             <div class="data sc">
               <label>Situação Civil:</label>
               <label>
-                <input value="Solteiro" type="radio" name="sc" id="solteiro"/>Solteiro(a)
+                <input required value="Solteiro" type="radio" name="sc" id="solteiro"/>Solteiro(a)
               </label>
               <label>
-                <input value="Casado" type="radio" name="sc" id="casado"/>Casado(a)
+                <input required value="Casado" type="radio" name="sc" id="casado"/>Casado(a)
               </label>
               <label>
-                <input value="Viuvo"type="radio"name="sc"id="viuvo"/>Viúvo(a)
+                <input required value="Viuvo"type="radio"name="sc"id="viuvo"/>Viúvo(a)
               </label>
             </div>
           </div>

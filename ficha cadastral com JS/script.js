@@ -68,6 +68,7 @@ buttonInclude.addEventListener('click', insertData)
 
 
 function insertData() {
+
   let sc = document.querySelector("input[name='sc']:checked")
   people = {
     name: userName.value,
@@ -93,8 +94,7 @@ function insertData() {
         )
       }
     }
-  }, window.location.reload())
-
+  },window.location.reload())
 }
 
 cep.addEventListener('keyup', e => {
@@ -154,6 +154,7 @@ let isValidForm = false
 form.addEventListener('submit', e => {
   e.preventDefault()
   validadeFields()
+
 })
 
 function setError(index) {
@@ -170,12 +171,15 @@ function removeError(index) {
 
 function validadeFields() {
   isValidForm = true
+
   if (requireds[0].value.length < 3 || !nameRegex.test(requireds[0].value)) {
-  }
+    isValidForm = false
+    setError(0)
+  } 
 
   if (requireds[1].value.length < 12 || !rgRegex.test(requireds[1].value)) {
     isValidForm = false
-  }
+  } 
 
   if (requireds[2].value.length < 14 || !cpfRegex.test(requireds[2].value)) {
     isValidForm = false
@@ -201,13 +205,20 @@ function validadeFields() {
     isValidForm = false
   }
 
+  if (requireds[8].value === "") {
+    isValidForm = false
+  }
+
+  if(requireds[9].value.length < 10) {
+    isValidForm = false
+  }
+
 
 }
 
-
 //MENSAGEM DE VALIDAÇÃO INDIVIDUAL DOS CAMPOS
 function nameMsg() {
-  if (requireds[0].value.length < 3 || !nameRegex.test(requireds[0].value)) {
+  if (requireds[0].value.length < 2 || !nameRegex.test(requireds[0].value)) {
     setError(0)
   }
   else {
@@ -216,7 +227,7 @@ function nameMsg() {
 }
 
 function rgMsg() {
-  if (requireds[1].value.length < 12 || !rgRegex.test(requireds[1].value)) {
+  if (requireds[1].value.length < 11 || !rgRegex.test(requireds[1].value)) {
     setError(1)
   } 
   else {
@@ -275,3 +286,19 @@ function numberMsg() {
     removeError(7)
   }
 }
+
+function sexoMsg() {
+  if (requireds[8].value.length === "") {
+    alert('Selecione uma das opções de sexo')
+  } 
+}
+
+function nascMsg() {
+  if(requireds[9].value.length < 10) {
+    setError(9)
+  }
+  else {
+    removeError(9)
+  }
+}
+
