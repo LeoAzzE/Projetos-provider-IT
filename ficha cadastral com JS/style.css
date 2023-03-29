@@ -64,14 +64,15 @@ fieldset {
     font-size: 10px;
     position: absolute;
     bottom: 20px;
-    left: 135px;
+    left: 100px;
     display: none;
     color: #e63636;
     word-break: normal;
 }
 
+
 .name > input {
-    width: 70%;
+    width: 60%;
 }
 
 .rg {
@@ -83,7 +84,19 @@ fieldset {
 }
 
 .rg > input {
-    width: 39.3%;
+    width: 60%;
+}
+
+.lastname {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+
+.lastname > input {
+    width: 59%;
 }
 
 .RgAndCpf {
@@ -125,7 +138,7 @@ fieldset {
 }
 
 .city > input {
-    width:  39.3%;
+    width:  60%;
 }
 
 .comp {
@@ -143,12 +156,12 @@ fieldset {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 43%;
+    width: 29%;
     position: relative;
 }
 
 .number input {
-    width: 30%;
+    width: 33%;
 }
 
 .cep {
@@ -160,7 +173,7 @@ fieldset {
 }
 
 .cep > input {
-    width:  39.3%;
+    width:  60%;
 }
 
 .bairro {
@@ -184,7 +197,7 @@ fieldset {
 }
 
 .end > input {
-    width: 70%;
+    width: 80.5%;
 }
 
 .sexAndBorn {
@@ -195,32 +208,42 @@ fieldset {
     gap: 8px;
 }
 
+.nameAndLastName {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
 
 .born {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 30px;
     position: relative;
+    margin-left: 20px;
 }
 
 .born > input {
-    width: 130px;
+    width: 100px;
 }
 
 .sex {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 106px;
+    gap: 53px;
     width: 100%;
     position: relative;
 }
 
 
+
 .sc {
+    margin-left: -20px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
     gap: 57px;
     position: relative;
 }
