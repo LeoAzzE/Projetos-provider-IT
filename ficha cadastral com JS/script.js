@@ -29,7 +29,7 @@ var userInformation = [
   bairro,
   city,
   comp,
-  number,
+  number
 ]
 array = []
 
@@ -63,7 +63,12 @@ db.transaction(function (tx) {
       var str = ''
       for (i = 0; i < n; i++) {
         str += '<tr>'
-        str += '<td>' + results.rows.item(i).name + " " + results.rows.item(i).lastname + '</td>'
+        str +=
+          '<td>' +
+          results.rows.item(i).name +
+          ' ' +
+          results.rows.item(i).lastname +
+          '</td>'
         str += '<td>' + results.rows.item(i).rg + '</td>'
         str += '<td>' + results.rows.item(i).cpf + '</td>'
         str +=
@@ -138,7 +143,7 @@ function insertData() {
 cep.addEventListener('keyup', e => {
   const inputValue = e.target.value
 
-  if (inputValue.length === 8) {
+  if (inputValue.length === 9) {
     consultaEndereco(cep.value)
   }
 })
@@ -326,13 +331,11 @@ function sexoMsg() {
   }
 }
 
-function dataMax() {;
+function dataMax() {
   let dataAtual = new Date()
   let dia = String(dataAtual.getDate() - 1).padStart(2, '0')
   let mes = String(dataAtual.getMonth() + 1).padStart(2, '0')
   let ano = dataAtual.getFullYear()
-  let date = ano + "-" + mes + "-" + dia;
+  let date = ano + '-' + mes + '-' + dia
   userBorn.max = date
-
-} 
-
+}

@@ -85,7 +85,7 @@
                 onkeypress="cepMsg()"
                 class="required"
                 autocomplete="off"
-                maxlength="8"
+                maxlength="9"
                 type="text"
                 name=""
                 id="cep"
@@ -262,8 +262,13 @@
         numericOnly: true
       })
       var cleave = new Cleave('#number', {
-        delimiters: [''],
+        delimiters: ['.', '-'],
         blocks: [5],
+        numericOnly: true
+      })
+      var cleave = new Cleave('#cep', {
+        delimiters: ['-'],
+        blocks: [5, 3],
         numericOnly: true
       })
     </script>
