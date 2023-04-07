@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Erro from './pages/Erro'
 
 import Home from './pages/Home'
 import Filme from './pages/Filme'
@@ -11,6 +12,8 @@ function RoutesApp() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="filme/:id" element={<Filme />} />
+
+        <Route path='*' element={<Erro/>}/>
       </Routes>
     </BrowserRouter>
   )
