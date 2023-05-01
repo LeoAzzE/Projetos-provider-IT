@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #B0C4DE;
+}
+
+.dataTable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    max-width: 80%;
+    min-width: 50%;
+    
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 90px;
+    flex-direction: column;
+}
+
+.inputZone {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    margin-top: 50px;
+    margin-bottom: -80px;
+    margin-left: 63%;
+}
+
+i {
+    position: absolute;
+    left: 170px;
+}
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+}
+
+.buttonInclude {
+    display: flex;
+    width: 1000px;
+    margin-top: 30px;
+    justify-content: center;
+}

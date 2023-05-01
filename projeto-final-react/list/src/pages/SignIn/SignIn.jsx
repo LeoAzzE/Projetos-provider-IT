@@ -13,14 +13,13 @@ export default function SignIn() {
     const[userName, setUserName] = useState('')
     const[userPassword, setuserPassword] = useState('')
 
-    const { signIn } = useContext(AuthContext)
+    const { signIn, loadingAuth } = useContext(AuthContext)
 
-    function handleSignIn(e) {
+    async function handleSignIn(e) {
         e.preventDefault()
-        alert('teste')
 
         if (userName !== '' && userPassword !== '') {
-            signIn(userName, userPassword)
+            await signIn(userName, userPassword)
         }
     }
 
@@ -35,11 +34,11 @@ export default function SignIn() {
                     <label htmlFor="username">Usuário</label>
                 </span>
                 <span className="p-float-label">
-                    <Password toggleMask strongLabel="Boa" mediumLabel="Média" weakLabel="muito simples"value={userPassword} onChange={(e)=> setuserPassword(e.target.value)} size={27} inputId="password"/>
+                    <Password feedback={false} value={userPassword} onChange={(e)=> setuserPassword(e.target.value)} size={31} inputId="password"/>
                     <label htmlFor="password">Senha</label>
                 </span>
                 <div>
-                    <Button onClick={handleSignIn} className='button' label="Login" severity="info" outlined />
+                    <Button onClick={handleSignIn} className='button' label={loadingAuth ? "Carregando..." : "Login"} severity="info" outlined />
                 </div>
 
                 <div className='register'>
