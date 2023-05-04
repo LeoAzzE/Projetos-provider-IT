@@ -6,11 +6,12 @@ import { Column } from 'primereact/column';
 import { FilterMatchMode } from "primereact/api"
 import { InputText } from "primereact/inputtext"
 import { Button } from 'primereact/button';
+import { Paginator } from 'primereact/paginator';
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";
 import  Modal from '../../components/Modal'
-import { collection, getDocs, query} from 'firebase/firestore'
+import { collection, getDocs, query, doc, deleteDoc, onSnapshot} from 'firebase/firestore'
 import { db } from '../../services/firebase'
 
 const listaRef = collection(db, "clientes")
@@ -56,6 +57,7 @@ function MainPage() {
 
                 querySnapshot.forEach(doc => {
                     lista.push({
+                        id: doc.id,
                         nome: doc.data().nome,
                         email: doc.data().email,
                         nascimento: doc.data().nascimento,
@@ -66,10 +68,25 @@ function MainPage() {
                     })
                 });
                 setListaClientes(clientes =>[...clientes, ...lista ])
+                
             }
             else {
                 
             }
+        }
+
+        const actionBodyTemplate = (e) => {          
+                return <span className="p-buttonset">          
+                    <Button className='action' icon="pi pi-pencil" size="small"/>
+                    <Button onClick={()=> deleteClient(e.id)} 
+                    className='action' icon="pi pi-trash" size="small" severity="danger" />
+                </span> 
+            }
+    
+        async function deleteClient(id) {
+            const docRef = doc(db, "clientes", id)
+            await deleteDoc(docRef)
+            window.location.reload()
         }
 
     return (
@@ -86,13 +103,15 @@ function MainPage() {
                     }}/>
                     <i className="pi pi-search" style={{width: '40px'}}></i>
                 </div>    
-                <DataTable value={listaClientes} filterDisplay="row" className='dataTable' filters={filters}>
-                    <Column style={{ minWidth: '17rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="nome" header="Nome"></Column>
-                    <Column style={{ minWidth: '14rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="email" header="Email"></Column>
-                    <Column style={{ minWidth: '15rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="cpf" header="CPF"></Column>
-                    <Column style={{ minWidth: '13rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="nascimento" header="Nascimento"></Column>
-                    <Column style={{ minWidth: '17rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="endereco" header="Endereco"></Column>
-                    <Column style={{ minWidth: '14rem', fontSize: '12px' }} showFilterMatchModes={false} filter field="genero" header="Gênero"></Column>
+                <DataTable
+                 tableStyle={{ minWidth: '90rem'}} paginatorTemplate='FirstPageLink PrevPageLink PageLinks NextPageLink CurrentPageReport RowsPerPageDropdown' emptyMessage="Nenhum resultado encontrado" value={listaClientes} filterDisplay="row" className='dataTable'>
+                    <Column style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria'}} sortable filter field="nome" header="Nome"></Column>
+                    <Column style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="email" header="Email"></Column>
+                    <Column style={{ minWidth: '15rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="cpf" header="CPF"></Column>
+                    <Column style={{ minWidth: '13rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="nascimento" header="Nascimento"></Column>
+                    <Column style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria' }}  filter field="endereco" header="Endereco"></Column>
+                    <Column style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="genero" header="Gênero"></Column>
+                    <Column style={{ minWidth: '12rem'}} field="id" body={actionBodyTemplate}></Column>              
                 </DataTable>
                 <div className='buttonInclude'>
                     <Button onClick={handleOpenModal} style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="incluir" icon="pi pi-user-plus" />

@@ -26,6 +26,15 @@ body {
     flex-direction: column;
 }
 
+.action {
+    width: 50px;
+}
+
+.p-buttonset {
+    display: flex;
+    gap: 10px;
+}
+
 .inputZone {
     text-align: center;
     display: flex;

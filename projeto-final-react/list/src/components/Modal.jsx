@@ -37,8 +37,7 @@ export default function Modal({close}){
             email: data.emailCad,
             nascimento: data.nascCad,
             cpf: data.cpfCad,
-            cep: data.cepCad,
-            endereco: data.estCad + ", " + data.cidadeCad + ", " + data.bairroCad + ", " + data.logCad + ", " + data.numeroCad,
+            endereco: data.cepCad + " " +  data.estCad + ", " + data.cidadeCad + ", " + data.bairroCad + ", " + data.logCad + ", " + data.numeroCad,
             gender: data.gender
         })
         .then(()=> {
