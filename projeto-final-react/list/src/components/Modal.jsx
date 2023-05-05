@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Modal.css'
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import  validator  from "validator";
 import { useForm } from "react-hook-form"
-import { InputMask } from 'primereact/inputmask';
-import { Calendar } from 'primereact/calendar';
-import { RadioButton } from 'primereact/radiobutton';
 import { addDoc, collection} from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { db } from '../services/firebase'
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";
+import { useParams } from 'react-router-dom';
+
 
 
 export default function Modal({close}){
@@ -27,7 +26,7 @@ export default function Modal({close}){
     const [cidade, setCidade] = useState(null)
     const [numero, setNumero] = useState(null)
     const [gender, setGender] = useState(null)
- 
+
 
     const { register, handleSubmit, setFocus, setValue, formState: { errors }} = useForm()
        
@@ -37,7 +36,12 @@ export default function Modal({close}){
             email: data.emailCad,
             nascimento: data.nascCad,
             cpf: data.cpfCad,
-            endereco: data.cepCad + " " +  data.estCad + ", " + data.cidadeCad + ", " + data.bairroCad + ", " + data.logCad + ", " + data.numeroCad,
+            cep: data.cepCad,
+            estado: data.estCad,
+            bairro: data.bairroCad,
+            cidade: data.cidadeCad,
+            logradouro: data.logCad,
+            numero: data.numeroCad,          
             gender: data.gender
         })
         .then(()=> {
@@ -69,6 +73,22 @@ export default function Modal({close}){
     //     return date
     // }
     
+//    const teste=(snapshot)=> {
+//         setNome(snapshot.data().nome)
+//         setCpf(snapshot.data().cpf)
+//         setCep(snapshot.data().cep)
+//         setUserEmail(snapshot.data().email)
+//         setLog(snapshot.data().endereco)
+//         setNascimento(snapshot.data().nascimento)
+//         setEst(snapshot.data().estado)
+//         setGender(snapshot.data().gender)
+//         setBairro(snapshot.data().bairro)
+//         setCidade(snapshot.data().cidade)
+//         setNumero(snapshot.data().numero)
+//     }
+
+
+
     async function cepComplete(e) {
         if (!e.target.value) {
             return;
@@ -166,8 +186,8 @@ export default function Modal({close}){
                                 <div className='separator'>
                                     <div className='radioInputs'>
                                         <input {... register('gender', {required: true})}
-                                        value='masc' type="radio" name="gender" id="" /> Masculino
-                                        <input {... register('gender', {required: true})} value='fem' type="radio" name="gender" id="" /> Feminino
+                                        value='masculino' type="radio" name="gender" id="" /> Masculino
+                                        <input {... register('gender', {required: true})} value='feminino' type="radio" name="gender" id="" /> Feminino
                                         <input {... register('gender', {required: true})} value='other' type="radio" name="gender" id="" /> Outro
                                     </div>
                                     <div className='error'>

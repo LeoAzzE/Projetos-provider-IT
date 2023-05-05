@@ -6,12 +6,13 @@ import { Column } from 'primereact/column';
 import { FilterMatchMode } from "primereact/api"
 import { InputText } from "primereact/inputtext"
 import { Button } from 'primereact/button';
+import { Link } from 'react-router-dom'
 import { Paginator } from 'primereact/paginator';
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";
 import  Modal from '../../components/Modal'
-import { collection, getDocs, query, doc, deleteDoc, onSnapshot} from 'firebase/firestore'
+import { collection, getDocs, query, doc, deleteDoc, getDoc, onSnapshot} from 'firebase/firestore'
 import { db } from '../../services/firebase'
 
 const listaRef = collection(db, "clientes")
@@ -34,24 +35,25 @@ function MainPage() {
         }
 
         useEffect(() => {
-            async function loadLista() {
+             async function loadLista() {
                 const q = query(listaRef)
-
+                
                 const querySnapshot = await getDocs(q)
                 setListaClientes([])
-                await updateList(querySnapshot)
+                await updateState(querySnapshot)            
             }
 
             loadLista()
 
             return () => {
-
-            }
+                }
         },[])
 
-        async function updateList(querySnapshot) {
-            const isCollectionEmpty = querySnapshot.size === 0
 
+        
+        async function updateState(querySnapshot) {
+            const isCollectionEmpty = querySnapshot.size === 0
+        
             if (!isCollectionEmpty) {
                 let lista = []
 
@@ -63,21 +65,21 @@ function MainPage() {
                         nascimento: doc.data().nascimento,
                         cpf: doc.data().cpf,
                         cep: doc.data().cep,
-                        endereco: doc.data().endereco,
+                        endereco: doc.data().cep + " ," + doc.data().estado + " ," + doc.data().cidade +
+                        " ," + doc.data().bairro + " ," + doc.data().logradouro + " ," + doc.data().numero,
                         genero: doc.data().gender
                     })
                 });
-                setListaClientes(clientes =>[...clientes, ...lista ])
-                
+                setListaClientes(clientes =>[...clientes, ...lista ])              
             }
-            else {
-                
-            }
+            
         }
 
         const actionBodyTemplate = (e) => {          
-                return <span className="p-buttonset">          
-                    <Button className='action' icon="pi pi-pencil" size="small"/>
+                return <span className="p-buttonset">     
+                <Link to={`/main/${e.id}`}>
+                    <Button onClick={()=> editData(e.id)} className='action' icon="pi pi-pencil" size="small"/>                 
+                </Link>     
                     <Button onClick={()=> deleteClient(e.id)} 
                     className='action' icon="pi pi-trash" size="small" severity="danger" />
                 </span> 
@@ -88,6 +90,28 @@ function MainPage() {
             await deleteDoc(docRef)
             window.location.reload()
         }
+
+        async function editData(id) {
+            setShowModal(true)
+            const docRef = doc(db, "clientes", id)
+            await getDoc(docRef)
+            
+            .then((snapshot)=> {          
+                snapshot.data().nome
+                snapshot.data().email,
+                snapshot.data().nascimento,
+                snapshot.data().cpf,
+                snapshot.data().cep,
+                snapshot.data().endereco,
+                snapshot.data().gender
+               
+            })
+            .catch(()=> {
+
+             
+            })
+        }
+
 
     return (
         <div>
@@ -118,7 +142,7 @@ function MainPage() {
                 </div>
             </div>         
             {showModal && (<Modal close={()=> setShowModal(false)}/>) }
-   
+            
         </div>
     )
 }
