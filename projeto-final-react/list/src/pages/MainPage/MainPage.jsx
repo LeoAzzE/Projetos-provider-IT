@@ -7,7 +7,7 @@ import { FilterMatchMode } from "primereact/api"
 import { InputText } from "primereact/inputtext"
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom'
-import { Paginator } from 'primereact/paginator';
+import { format } from 'date-fns'
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";
@@ -63,10 +63,11 @@ function MainPage() {
                         nome: doc.data().nome,
                         email: doc.data().email,
                         nascimento: doc.data().nascimento,
+                       // nascimentoFormat: format(nascimento.toDate(), 'dd/MM/yyyy'),
                         cpf: doc.data().cpf,
                         cep: doc.data().cep,
-                        endereco: doc.data().cep + " ," + doc.data().estado + " ," + doc.data().cidade +
-                        " ," + doc.data().bairro + " ," + doc.data().logradouro + " ," + doc.data().numero,
+                        endereco: doc.data().cep + " ," + doc.data().estado + "  ," + doc.data().cidade +
+                        " ," + doc.data().bairro + " ," + doc.data().logradouro + "  ," + doc.data().numero,
                         genero: doc.data().gender
                     })
                 });
@@ -91,25 +92,8 @@ function MainPage() {
             window.location.reload()
         }
 
-        async function editData(id) {
-            setShowModal(true)
-            const docRef = doc(db, "clientes", id)
-            await getDoc(docRef)
-            
-            .then((snapshot)=> {          
-                snapshot.data().nome
-                snapshot.data().email,
-                snapshot.data().nascimento,
-                snapshot.data().cpf,
-                snapshot.data().cep,
-                snapshot.data().endereco,
-                snapshot.data().gender
-               
-            })
-            .catch(()=> {
-
-             
-            })
+        async function editData() {
+            setShowModal(true)         
         }
 
 
@@ -126,17 +110,19 @@ function MainPage() {
                         })
                     }}/>
                     <i className="pi pi-search" style={{width: '40px'}}></i>
-                </div>    
-                <DataTable
-                 tableStyle={{ minWidth: '90rem'}} paginatorTemplate='FirstPageLink PrevPageLink PageLinks NextPageLink CurrentPageReport RowsPerPageDropdown' emptyMessage="Nenhum resultado encontrado" value={listaClientes} filterDisplay="row" className='dataTable'>
+                </div>
+    
+                <DataTable paginator rows={3} rowsPerPageOptions={[1,2,3]} 
+                 tableStyle={{ minWidth: '90rem'}} filters={filters} emptyMessage="Nenhum resultado encontrado" value={listaClientes} filterDisplay="row" className='dataTable'>
                     <Column style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria'}} sortable filter field="nome" header="Nome"></Column>
                     <Column style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="email" header="Email"></Column>
-                    <Column style={{ minWidth: '15rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="cpf" header="CPF"></Column>
-                    <Column style={{ minWidth: '13rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="nascimento" header="Nascimento"></Column>
-                    <Column style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria' }}  filter field="endereco" header="Endereco"></Column>
+                    <Column style={{ minWidth: '15rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="cpf" header="CPF"></Column>
+                    <Column style={{ minWidth: '13rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="nascimento" header="Nascimento"></Column>
+                    <Column style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="endereco" header="Endereco"></Column>
                     <Column style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="genero" header="Gênero"></Column>
                     <Column style={{ minWidth: '12rem'}} field="id" body={actionBodyTemplate}></Column>              
                 </DataTable>
+                
                 <div className='buttonInclude'>
                     <Button onClick={handleOpenModal} style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="incluir" icon="pi pi-user-plus" />
                 </div>

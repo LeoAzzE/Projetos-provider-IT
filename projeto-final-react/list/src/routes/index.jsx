@@ -10,6 +10,7 @@ function RoutesApp() {
             <Route path='/' element={<SignIn/>}/>
             <Route path='register' element={<SignUp/>}/>
             <Route path='main' element={<Private><MainPage/></Private>}/>
+            <Route path='main/:id' element={<Private><MainPage/></Private>}/>
         </Routes>
     )
 }

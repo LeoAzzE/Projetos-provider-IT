@@ -9,20 +9,19 @@ body {
 }
 
 .dataTable {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-top: 100px;
-    max-width: 80%;
+    max-width: 70%;
     min-width: 50%;
+    height: auto;
     
 }
 
 .container {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 90px;
+    margin-top: 10px;
     flex-direction: column;
 }
 
@@ -39,11 +38,11 @@ body {
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     position: relative;
     margin-top: 50px;
     margin-bottom: -80px;
-    margin-left: 63%;
+    
 }
 
 i {

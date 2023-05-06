@@ -4,15 +4,14 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import  validator  from "validator";
 import { useForm } from "react-hook-form"
-import { addDoc, collection} from 'firebase/firestore'
+import { addDoc, collection, getDoc, doc, updateDoc} from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { db } from '../services/firebase'
+import { format } from 'date-fns'
 import 'primeicons/primeicons.css';
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-import { useParams } from 'react-router-dom';
-
-
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function Modal({close}){
     const[userName, setUserName] = useState('')
@@ -25,31 +24,62 @@ export default function Modal({close}){
     const [bairro, setBairro] = useState(null)
     const [cidade, setCidade] = useState(null)
     const [numero, setNumero] = useState(null)
-    const [gender, setGender] = useState(null)
+    const [gender, setGender] = useState('masculino')
+    const [idCliente, setIdCliente] = useState(false)
 
-
+    const { id } = useParams()
     const { register, handleSubmit, setFocus, setValue, formState: { errors }} = useForm()
-       
-    async function onSubmit(data) {
-        await addDoc(collection(db, "clientes") , {
-            nome: data.nameCad,
-            email: data.emailCad,
-            nascimento: data.nascCad,
-            cpf: data.cpfCad,
-            cep: data.cepCad,
-            estado: data.estCad,
-            bairro: data.bairroCad,
-            cidade: data.cidadeCad,
-            logradouro: data.logCad,
-            numero: data.numeroCad,          
-            gender: data.gender
-        })
-        .then(()=> {
-            toast.success('cliente cadastrado com sucesso')
-            window.location.reload()
-        })
-    } 
+     
+
+        async function onEdited() {
+            const docRef = doc(db, "clientes", id)
+                await updateDoc(docRef, {
+                    nome: userName,
+                    email: userEmail,
+                    nascimento: nasc,
+                    cpf: cpf,
+                    cep: cep,
+                    estado: estado,
+                    bairro: bairro,
+                    cidade: cidade,
+                    logradouro: log,
+                    numero: numero,          
+                    gender: gender
+                })
+                .then(()=> {
+                    window.location.reload()
+                    useNavigate('/main')
+                })
+                .catch(()=> {
     
+                })
+                return;
+        }
+
+        async function onSubmit(data) {
+                await addDoc(collection(db, "clientes") , {
+                    nome: data.nameCad,
+                    email: data.emailCad,
+                    nascimento: data.nascCad,
+                    cpf: data.cpfCad,
+                    cep: data.cepCad,
+                    estado: data.estCad,
+                    bairro: data.bairroCad,
+                    cidade: data.cidadeCad,
+                    logradouro: data.logCad,
+                    numero: data.numeroCad,          
+                    gender: data.gender
+                })
+                .then(()=> {
+                    toast.success('cliente cadastrado com sucesso')
+                    window.location.reload()
+                })
+        } 
+    
+        function handleOptionChange(e) {
+            setGender(e.target.value)
+        }
+
     function cpfFormatter(cpf) {
         return cpf.replace(/\D/g, '')
         .replace(/(\d{3})(\d)/, '$1.$2')
@@ -64,40 +94,49 @@ export default function Modal({close}){
         .replace(/(-\d{3})\d+?$/, '$1')
     }
 
-    // function dateFormatter() {
-    //     let dataAtual = new Date()
-    //     let dia = String(dataAtual.getDate() - 1).padStart(2, '0')
-    //     let mes = String(dataAtual.getMonth() + 1).padStart(2, '0')
-    //     let ano = dataAtual.getFullYear()
-    //     let date = ano + '-' + mes + '-' + dia
-    //     return date
-    // }
     
-//    const teste=(snapshot)=> {
-//         setNome(snapshot.data().nome)
-//         setCpf(snapshot.data().cpf)
-//         setCep(snapshot.data().cep)
-//         setUserEmail(snapshot.data().email)
-//         setLog(snapshot.data().endereco)
-//         setNascimento(snapshot.data().nascimento)
-//         setEst(snapshot.data().estado)
-//         setGender(snapshot.data().gender)
-//         setBairro(snapshot.data().bairro)
-//         setCidade(snapshot.data().cidade)
-//         setNumero(snapshot.data().numero)
-//     }
+useEffect(()=> {
+    if (id) {
+        loadId()
+    }
+}, [id])
 
 
+    async function loadId() {
+        const docRef = doc(db, "clientes", id)
+            await getDoc(docRef)
+                .then((snapshot)=> {          
+                setUserName(snapshot.data().nome)
+                setUserEmail(snapshot.data().email)
+                setNasc(snapshot.data().nasc)
+                setCpf(snapshot.data().cpf)
+                setCep(snapshot.data().cep)
+                setEstado(snapshot.data().estado)
+                setCidade(snapshot.data().cidade)
+                setBairro(snapshot.data().bairro)
+                setLog(snapshot.data().logradouro)
+                setNumero(snapshot.data().numero)
+                setGender(snapshot.data().gender)
+               
+                setIdCliente(true)
+            })
+            .catch(()=> {
+                setIdCliente(false)
+            })
+    }
 
     async function cepComplete(e) {
         if (!e.target.value) {
             return;
         } else {
-
             const cep = e.target.value.replace(/\D/g, '')
             const apiUrl = `https://viacep.com.br/ws/${cep}/json/`
             const response = await fetch(apiUrl)
             const data = await response.json()
+
+            if (data.erro) {
+                alert('cep invalido')
+            }
 
             setValue('estCad', data.uf)
             setValue('cidadeCad', data.localidade)
@@ -105,28 +144,28 @@ export default function Modal({close}){
             setValue('bairroCad', data.bairro)
             setFocus('numeroCad')
         }
-
-            
-
     }
 
     return (
         <div className="modall">
             <div className='container'>
-                <h1 className='aga1'>Cadastrar cliente</h1>
+                <h1 className='aga1'>{idCliente ? "Editar dados" : "Cadastrar Cliente"}</h1>
                 <span className='lineCad'></span>
-                <Button onClick={close} className='close' icon="pi pi-times" rounded outlined severity="danger" aria-label="Cancel" />
+                <Link to={'/main'} >
+                    <Button onClick={close} className='close' icon="pi pi-times" rounded outlined severity="danger" aria-label="Cancel" />
+                </Link>
                 <main className='inputTexts'>
                         <div className='afastar'>
                             <span className="cli">
                                 <label htmlFor="username">Nome</label>
-                                <InputText className={errors?.nameCad && "p-invalid"} {... register('nameCad', {required: true, minLength: 3})} value={userName} onChange={(e)=> setUserName(e.target.value)} size={15} id="username" />
+                                <InputText autoFocus className={errors?.nameCad && "p-invalid"} {... register('nameCad', {required: true, minLength: 3})} value={userName} onChange={(e)=> setUserName(e.target.value)} size={15} id="username" />
                                 {errors?.nameCad?.type === "required" && (<p className='erro-msg'>O Nome é obrigatorio</p>)}
                                 {errors?.nameCad?.type === "minLength" && (<p className='erro-msg'>O Nome deve ter no minimo 3 caracteres</p>)}
+                                
                             </span>
                             <span className="cli">
                                 <label htmlFor="email">Email</label>
-                                <InputText className={errors?.emailCad && "p-invalid"} {... register('emailCad', {required: true, validate: (value) => validator.isEmail(value)})} value={userEmail} onChange={(e)=> setUserEmail(e.target.value)} size={15} id="useremail" />
+                                <InputText  className={errors?.emailCad && "p-invalid"} {... register('emailCad', {required: true, validate: (value) => validator.isEmail(value)})} placeholder='example@ex.com' value={userEmail} onChange={(e)=> setUserEmail(e.target.value)} size={15} id="useremail" />
                                 {errors?.emailCad?.type && (<p className='erro-msg'>Insira um e-mail válido</p>)}   
                             </span>
                             
@@ -140,7 +179,7 @@ export default function Modal({close}){
                         <div className='afastar2'>
                             <span className="cli">
                                 <label htmlFor="userCpf">CPF</label>
-                                <InputText maxLength={14} keyfilter="int" {... register('cpfCad', {required: true, minLength: 14})} className={errors?.cpfCad && "p-invalid"} size={13} value={cpfFormatter(cpf)} onChange={(e) => setCpf(e.target.value)}  placeholder="CPF" />
+                                <InputText maxLength={14} keyfilter="int" {... register('cpfCad', {required: true, minLength: 14})} className={errors?.cpfCad && "p-invalid"} size={13} value={cpfFormatter(cpf)} onChange={(e) => setCpf(e.target.value)}   />
                                 {errors?.cpfCad?.type && (<p className='erro-msg'>Insira um cpf válido</p>)}
                             </span>
                             <span className="cli">
@@ -185,10 +224,12 @@ export default function Modal({close}){
                             <div className='gender'>*Gênero:</div>
                                 <div className='separator'>
                                     <div className='radioInputs'>
-                                        <input {... register('gender', {required: true})}
+                                        <input checked={ gender === "masculino"} {... register('gender', {required: true, minLength: 3})} onChange={handleOptionChange} 
                                         value='masculino' type="radio" name="gender" id="" /> Masculino
-                                        <input {... register('gender', {required: true})} value='feminino' type="radio" name="gender" id="" /> Feminino
-                                        <input {... register('gender', {required: true})} value='other' type="radio" name="gender" id="" /> Outro
+
+                                        <input checked={ gender === "feminino"} {... register('gender', {required: true, minLength: 3})} onChange={handleOptionChange}  value='feminino' type="radio" name="gender" id="" /> Feminino
+
+                                        <input checked={ gender === "outro"} {... register('gender', {required: true, minLength: 3})}onChange={handleOptionChange} type="radio" name="gender" id="" value="outro"/> Outro
                                     </div>
                                     <div className='error'>
                                         {errors?.gender && <p className='erro-msg'>O gênero é obrigatório</p>}
@@ -199,8 +240,14 @@ export default function Modal({close}){
                         </div>
                         
                         <div className='btnCad'>
-                        <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
-                        style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="Cadastrar"/>
+                            {idCliente ? <Button onClick={onEdited} type='submit'
+                            style={{backgroundColor: '#85bb65'}} severity='help' size="normal" label="Editar"/>
+                            : 
+                             <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
+                            style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="Cadastrar"/>}
+
+                        {/* <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
+                        style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label={idCliente ? "Editar" : "Cadastrar"}/> */}
                         </div>
                     </main>    
             </div>
