@@ -7,7 +7,9 @@ import { useForm } from "react-hook-form"
 import { addDoc, collection, getDoc, doc, updateDoc} from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { db } from '../services/firebase'
-import { format } from 'date-fns'
+//import { InputMask } from 'primereact/inputmask';
+import {format, parseISO} from 'date-fns'
+
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -36,7 +38,8 @@ export default function Modal({close}){
                 await updateDoc(docRef, {
                     nome: userName,
                     email: userEmail,
-                    nascimento: nasc,
+                    nascimento: format(parseISO(nasc), 'dd-MM-yyyy'),
+                    //nascimento: nasc,
                     cpf: cpf,
                     cep: cep,
                     estado: estado,
@@ -60,7 +63,8 @@ export default function Modal({close}){
                 await addDoc(collection(db, "clientes") , {
                     nome: data.nameCad,
                     email: data.emailCad,
-                    nascimento: data.nascCad,
+                    nascimento: format(parseISO(data.nascCad), 'dd-MM-yyyy'),
+                    //nascimento: data.nascCad,
                     cpf: data.cpfCad,
                     cep: data.cepCad,
                     estado: data.estCad,
@@ -93,6 +97,13 @@ export default function Modal({close}){
         .replace(/(\d{5})(\d)/, '$1-$2')
         .replace(/(-\d{3})\d+?$/, '$1')
     }
+
+    // function nascimentoFormatter(date) {
+    //     return date.replace(/\D/g, '')
+    //     .replace(/(\d{2})(\d)/, '$1-$2')
+    //     .replace(/(\d{2})(\d)/, '$1-$2')
+    //     .replace(/(\d{4})(\d{1,2})/,'$1')
+    // }
 
     
 useEffect(()=> {
@@ -135,7 +146,7 @@ useEffect(()=> {
             const data = await response.json()
 
             if (data.erro) {
-                alert('cep invalido')
+                return
             }
 
             setValue('estCad', data.uf)
@@ -172,9 +183,9 @@ useEffect(()=> {
                             <span className="cli">
                                 <label htmlFor="username">Nascimento</label>
                                 <InputText type='date' className={errors?.nascCad && "p-invalid"} size={10} {... register('nascCad', {required: true})} value={nasc} onChange={(e)=> setNasc(e.target.value)} id="usernasc" />
-                                {errors?.nascCad?.type && (<p className='erro-msg'>Insira uma data válida</p>)} 
+                                {errors?.nascCad?.type && (<p className='erro-msg'>Insira uma data válida</p>)}                               
                             </span>
-                            
+        
                         </div>
                         <div className='afastar2'>
                             <span className="cli">
@@ -241,13 +252,11 @@ useEffect(()=> {
                         
                         <div className='btnCad'>
                             {idCliente ? <Button onClick={onEdited} type='submit'
-                            style={{backgroundColor: '#85bb65'}} severity='help' size="normal" label="Editar"/>
+                            style={{backgroundColor: '#85bb65'}} severity="Sucess" size="normal" label="Editar"/>
                             : 
                              <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
                             style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="Cadastrar"/>}
 
-                        {/* <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
-                        style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label={idCliente ? "Editar" : "Cadastrar"}/> */}
                         </div>
                     </main>    
             </div>

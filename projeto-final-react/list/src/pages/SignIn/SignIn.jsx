@@ -34,7 +34,7 @@ export default function SignIn() {
                     <label htmlFor="username">Usuário</label>
                 </span>
                 <span className="p-float-label">
-                    <Password feedback={false} value={userPassword} onChange={(e)=> setuserPassword(e.target.value)} size={31} inputId="password"/>
+                    <Password  feedback={false} value={userPassword} onChange={(e)=> setuserPassword(e.target.value)} size={31} inputId="password"/>
                     <label htmlFor="password">Senha</label>
                 </span>
                 <div>
