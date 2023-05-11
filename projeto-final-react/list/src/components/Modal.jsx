@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form"
 import { addDoc, collection, getDoc, doc, updateDoc} from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { db } from '../services/firebase'
-//import { InputMask } from 'primereact/inputmask';
+import { Calendar } from 'primereact/calendar';
+import { InputMask } from 'primereact/inputmask';
 import {format, parseISO} from 'date-fns'
 
 import 'primeicons/primeicons.css';
@@ -32,14 +33,13 @@ export default function Modal({close}){
     const { id } = useParams()
     const { register, handleSubmit, setFocus, setValue, formState: { errors }} = useForm()
      
-
         async function onEdited() {
             const docRef = doc(db, "clientes", id)
+            
                 await updateDoc(docRef, {
                     nome: userName,
                     email: userEmail,
-                    nascimento: format(parseISO(nasc), 'dd-MM-yyyy'),
-                    //nascimento: nasc,
+                    nascimento: nasc,
                     cpf: cpf,
                     cep: cep,
                     estado: estado,
@@ -50,21 +50,23 @@ export default function Modal({close}){
                     gender: gender
                 })
                 .then(()=> {
+                    toast.info("Cliente atualizado com sucesso!")
                     window.location.reload()
                     useNavigate('/main')
                 })
                 .catch(()=> {
-    
+                    
                 })
                 return;
         }
 
         async function onSubmit(data) {
+            console.log(data)
                 await addDoc(collection(db, "clientes") , {
+                    created: new Date(),
                     nome: data.nameCad,
                     email: data.emailCad,
-                    nascimento: format(parseISO(data.nascCad), 'dd-MM-yyyy'),
-                    //nascimento: data.nascCad,
+                    nascimento: data.nascCad,
                     cpf: data.cpfCad,
                     cep: data.cepCad,
                     estado: data.estCad,
@@ -98,12 +100,6 @@ export default function Modal({close}){
         .replace(/(-\d{3})\d+?$/, '$1')
     }
 
-    // function nascimentoFormatter(date) {
-    //     return date.replace(/\D/g, '')
-    //     .replace(/(\d{2})(\d)/, '$1-$2')
-    //     .replace(/(\d{2})(\d)/, '$1-$2')
-    //     .replace(/(\d{4})(\d{1,2})/,'$1')
-    // }
 
     
 useEffect(()=> {
@@ -119,7 +115,7 @@ useEffect(()=> {
                 .then((snapshot)=> {          
                 setUserName(snapshot.data().nome)
                 setUserEmail(snapshot.data().email)
-                setNasc(snapshot.data().nasc)
+                setNasc(snapshot.data().nascimento)
                 setCpf(snapshot.data().cpf)
                 setCep(snapshot.data().cep)
                 setEstado(snapshot.data().estado)
@@ -157,6 +153,7 @@ useEffect(()=> {
         }
     }
 
+
     return (
         <div className="modall">
             <div className='container'>
@@ -176,15 +173,16 @@ useEffect(()=> {
                             </span>
                             <span className="cli">
                                 <label htmlFor="email">Email</label>
-                                <InputText  className={errors?.emailCad && "p-invalid"} {... register('emailCad', {required: true, validate: (value) => validator.isEmail(value)})} placeholder='example@ex.com' value={userEmail} onChange={(e)=> setUserEmail(e.target.value)} size={15} id="useremail" />
+                                <InputText className={errors?.emailCad && "p-invalid"} {... register('emailCad', {required: true, validate: (value) => validator.isEmail(value)})} placeholder='example@ex.com' value={userEmail} onChange={(e)=> setUserEmail(e.target.value)} size={15} id="useremail" />
                                 {errors?.emailCad?.type && (<p className='erro-msg'>Insira um e-mail válido</p>)}   
                             </span>
                             
                             <span className="cli">
                                 <label htmlFor="username">Nascimento</label>
-                                <InputText type='date' className={errors?.nascCad && "p-invalid"} size={10} {... register('nascCad', {required: true})} value={nasc} onChange={(e)=> setNasc(e.target.value)} id="usernasc" />
-                                {errors?.nascCad?.type && (<p className='erro-msg'>Insira uma data válida</p>)}                               
+                                <InputText type='date' {... register('nascCad', {minLength: 1})} className={errors?.nascCad && "p-invalid"} size={10} value={nasc} onChange={(e)=> setNasc(e.target.value)} id="usernasc" />
+                                {errors?.nascCad?.type && (<p className='erro-msg'>Insira uma data válida </p>)}                               
                             </span>
+                            
         
                         </div>
                         <div className='afastar2'>
@@ -252,7 +250,7 @@ useEffect(()=> {
                         
                         <div className='btnCad'>
                             {idCliente ? <Button onClick={onEdited} type='submit'
-                            style={{backgroundColor: '#85bb65'}} severity="Sucess" size="normal" label="Editar"/>
+                            severity="help" size="normal" label="Editar"/>
                             : 
                              <Button onClick={()=> handleSubmit(onSubmit)()} type='submit'
                             style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="Cadastrar"/>}
