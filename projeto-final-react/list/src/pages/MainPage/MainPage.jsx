@@ -129,11 +129,11 @@ function MainPage() {
                  tableStyle={{ minWidth: '90rem'}} emptyMessage="Nenhum resultado encontrado" value={listaClientes} filterDisplay="row" showGridlines className='dataTable'>
 
                     <Column filterField='nome' style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria'}} sortable filter field="nome" header="Nome"></Column>
-                    <Column filterField='email' style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="email" header="Email"></Column>
-                    <Column filterField='cpf' style={{ minWidth: '15rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="cpf" header="CPF"></Column>
+                    <Column filterField='email' style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="email" header="Email"></Column>
+                    <Column filterField='cpf' style={{ minWidth: '15rem', fontSize: '15px', fontFamily: 'Cambria' }}  filter field="cpf" header="CPF"></Column>
                     <Column filterField='nascimento'style={{ minWidth: '13rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="nascimento" header="Data de Nascimento"></Column>
-                    <Column filterField='endereco' style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="endereco" header="Endereco"></Column>
-                    <Column filterField='genero' style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }} sortable filter field="genero" header="Gênero"></Column>
+                    <Column filterField='endereco' style={{ minWidth: '17rem', fontSize: '15px', fontFamily: 'Cambria' }} filter field="endereco" header="Endereco"></Column>
+                    <Column filterField='genero' style={{ minWidth: '14rem', fontSize: '15px', fontFamily: 'Cambria' }}  filter field="genero" header="Gênero"></Column>
                     <Column style={{ minWidth: '12rem'}} field="id" body={actionBodyTemplate}></Column>     
 
                 </DataTable>

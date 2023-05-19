@@ -179,7 +179,7 @@ useEffect(()=> {
                             
                             <span className="cli">
                                 <label htmlFor="username">Nascimento</label>
-                                <InputText type='date' {... register('nascCad', {minLength: 1})} className={errors?.nascCad && "p-invalid"} size={10} value={nasc} onChange={(e)=> setNasc(e.target.value)} id="usernasc" />
+                                <InputText type='date' max={new Date()} {... register('nascCad', {minLength: 1})} className={errors?.nascCad && "p-invalid"} size={10} value={nasc} onChange={(e)=> setNasc(e.target.value)} id="usernasc" />
                                 {errors?.nascCad?.type && (<p className='erro-msg'>Insira uma data válida </p>)}                               
                             </span>
                             
