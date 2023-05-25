@@ -55,6 +55,7 @@ public class ClienteService {
     @Transactional
     public ClienteDTO update(Long id, ClienteDTO dto) {
         try {
+            repository.findById(id);
             Cliente entity = repository.getReferenceById(id);
             entity.setNome(dto.getNome());
             entity.setEmail(dto.getEmail());
@@ -77,6 +78,7 @@ public class ClienteService {
 
     public void delete(Long id) {
         try {
+            repository.findById(id);
             repository.deleteById(id);
         }
         catch(EmptyResultDataAccessException e) {
