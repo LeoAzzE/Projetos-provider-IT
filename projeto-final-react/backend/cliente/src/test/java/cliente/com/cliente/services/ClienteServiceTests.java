@@ -17,6 +17,7 @@ import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -36,11 +37,11 @@ public class ClienteServiceTests {
     private Optional<Cliente> optionalCliente;
 
     private void startCliente() {
-        clienteDto = new ClienteDTO(1L, "leo", "leo@leo.com", "221323123", new Date(), "masculino",
+        clienteDto = new ClienteDTO(1L, "leo", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77");
-        cliente = new Cliente(1L, "leo", "leo@leo.com", "221323123", new Date(), "masculino",
+        cliente = new Cliente(1L, "leo", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77");
-        optionalCliente = Optional.of(new Cliente(1L, "leo", "leo@leo.com", "221323123", new Date(), "masculino",
+        optionalCliente = Optional.of(new Cliente(1L, "leo", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77"));
     }
 

@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.hamcrest.Matchers.*;
@@ -48,9 +49,9 @@ public class ClienteResourceTests {
     private MockMvc mockMvc;
 
 
-        ClienteDTO clienteDto = new ClienteDTO(1L, "leo", "leo@leo.com", "221323123", new Date(), "masculino",
+        ClienteDTO clienteDto = new ClienteDTO(1L, "leo", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77");
-        ClienteDTO clienteDto2 = new ClienteDTO(2L, "leandro", "leo@leo.com", "221323123", new Date(), "masculino",
+        ClienteDTO clienteDto2 = new ClienteDTO(2L, "leandro", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77");
 
 
@@ -90,7 +91,7 @@ public class ClienteResourceTests {
 
     @Test
     void whenInsertThenReturnSucess() throws Exception {
-        ClienteDTO cliente = new ClienteDTO(3L, "leticia", "letícia@gmail.com", "221312323", new Date(), "feminino",
+        ClienteDTO cliente = new ClienteDTO(3L, "leticia", "letícia@gmail.com", "221312323",LocalDate.now(), "feminino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "70");
 
         Mockito.when(service.insert(cliente)).thenReturn(cliente);
@@ -109,7 +110,7 @@ public class ClienteResourceTests {
 
     @Test
     void whenUpdateThenReturnSucess() throws Exception {
-        ClienteDTO cliente = new ClienteDTO(1L, "new name leo Chaves", "leo@leo.com", "221323123", new Date(), "masculino",
+        ClienteDTO cliente = new ClienteDTO(1L, "new name leo Chaves", "leo@leo.com", "221323123", LocalDate.now(), "masculino",
                 "2121332", "RJ", "RJ", "guadalupe", "rua francisco portela", "77");
 
         Mockito.when(service.update(clienteDto.getId(), cliente)).thenReturn(cliente);

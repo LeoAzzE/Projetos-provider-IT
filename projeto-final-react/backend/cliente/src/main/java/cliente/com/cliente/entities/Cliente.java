@@ -3,6 +3,7 @@ package cliente.com.cliente.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class Cliente implements Serializable {
     private String nome;
     private String email;
     private String cpf;
-    private Date nascimento;
+    private LocalDate nascimento;
     private String genero;
     private String cep;
     private String estado;
@@ -29,7 +30,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nome, String email, String cpf, Date nascimento,
+    public Cliente(Long id, String nome, String email, String cpf, LocalDate nascimento,
                    String genero, String cep, String estado, String cidade, String bairro, String logradouro, String numero) {
         this.id = id;
         this.nome = nome;
@@ -77,11 +78,11 @@ public class Cliente implements Serializable {
         this.cpf = cpf;
     }
 
-    public Date getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
     }
 

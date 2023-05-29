@@ -4,6 +4,7 @@ import cliente.com.cliente.entities.Cliente;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ClienteDTO implements Serializable {
@@ -12,7 +13,7 @@ public class ClienteDTO implements Serializable {
     private String nome;
     private String email;
     private String cpf;
-    private Date nascimento;
+    private LocalDate nascimento;
     private String genero;
     private String cep;
     private String estado;
@@ -21,7 +22,7 @@ public class ClienteDTO implements Serializable {
     private String logradouro;
     private String numero;
 
-    public ClienteDTO(Long id, String nome, String email, String cpf, Date nascimento,
+    public ClienteDTO(Long id, String nome, String email, String cpf, LocalDate nascimento,
                       String genero, String cep, String estado, String cidade, String bairro, String logradouro, String numero) {
             this.id = id;
             this.nome = nome;
@@ -84,11 +85,11 @@ public class ClienteDTO implements Serializable {
         this.cpf = cpf;
     }
 
-    public Date getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
     }
 
