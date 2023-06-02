@@ -15,7 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.time.LocalDate;
 import java.util.*;

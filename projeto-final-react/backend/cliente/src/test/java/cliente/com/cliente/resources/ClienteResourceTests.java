@@ -7,6 +7,7 @@ import cliente.com.cliente.services.ClienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +33,6 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @WebMvcTest(ClienteResourceTests.class)
 public class ClienteResourceTests {
 
@@ -42,7 +42,8 @@ public class ClienteResourceTests {
     @Mock
     private ClienteService service;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
+
     ObjectWriter objectWriter = objectMapper.writer();
 
 
@@ -105,7 +106,6 @@ public class ClienteResourceTests {
         mockMvc.perform(mockRequest)
                 .andExpect(status().is4xxClientError())
                 .andDo(print());
-
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ClienteResourceTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(updatedContent);
-        mockMvc.perform(mockRequest)
+                 mockMvc.perform(mockRequest)
                 .andExpect(status().is4xxClientError())
                 .andDo(print());
     }

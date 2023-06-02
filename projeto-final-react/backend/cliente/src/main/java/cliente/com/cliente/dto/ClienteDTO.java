@@ -2,6 +2,7 @@ package cliente.com.cliente.dto;
 
 import cliente.com.cliente.entities.Cliente;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -148,4 +149,5 @@ public class ClienteDTO implements Serializable {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
 }

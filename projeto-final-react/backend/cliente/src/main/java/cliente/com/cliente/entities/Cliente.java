@@ -1,5 +1,6 @@
 package cliente.com.cliente.entities;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,6 +19,7 @@ public class Cliente implements Serializable {
     private String nome;
     private String email;
     private String cpf;
+
     private LocalDate nascimento;
     private String genero;
     private String cep;

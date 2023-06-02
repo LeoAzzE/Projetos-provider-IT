@@ -7,15 +7,13 @@ import { FilterMatchMode} from "primereact/api"
 import { InputText } from "primereact/inputtext"
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom'
-import {format, parseISO, toDate} from 'date-fns'
+import {format, parseISO} from 'date-fns'
 import 'primeicons/primeicons.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";
 import  Modal from '../../components/Modal'
-import { collection, getDocs, query, doc, deleteDoc, orderBy} from 'firebase/firestore'
-import { db } from '../../services/firebase'
 
-const listaRef = collection(db, "clientes")
+
 
 function MainPage() {
     const { logout } = useContext(AuthContext)
@@ -31,7 +29,16 @@ function MainPage() {
         endereco: {value: null, matchMode: FilterMatchMode.CONTAINS},
         genero: {value: null, matchMode: FilterMatchMode.CONTAINS}
     })
-    
+
+    const [filterListaClients, setFilterListaClientes] = useState([{
+        id: "",
+        nome: "",
+        email: "",
+        nascimento: "",
+        cpf: "",
+        genero: "",
+        endereco: ""
+    }])
 
     async function handleLogout() {
         await logout()
@@ -41,47 +48,43 @@ function MainPage() {
             setShowModal(true)
         }
 
-        useEffect(() => {
-             async function loadLista() {
-                const q = query(listaRef, orderBy('created', 'desc'))
-                
-                const querySnapshot = await getDocs(q)
-                setListaClientes([])
-                await updateState(querySnapshot)            
-            }
 
-            loadLista()
-
-            return () => {
-                }
+        useEffect(() => {            
+                fetch("http://localhost:8080/clientes").then((resp)=> {
+                   return resp.json()
+                }).then((resp)=> {
+                    setListaClientes([])
+                    updateState(resp)
+                }).catch((error)=> {
+                   console.log(error)
+                })           
+                return () => {
+                        }           
+            
         },[])
 
 
-
-        async function updateState(querySnapshot) {
-            const isCollectionEmpty = querySnapshot.size === 0
-        
+        async function updateState(response) {
+            const isCollectionEmpty = response.size === 0       
             if (!isCollectionEmpty) {
                 let lista = []
-
-                querySnapshot.forEach(doc => {
+                response.forEach(doc => {
                     lista.push({
                         id: doc.id,
-                        nome: doc.data().nome,
-                        email: doc.data().email,
-                        //nascimento: doc.data().nascimento,
-                        nascimento: format(parseISO(doc.data().nascimento), 'dd/MM/yyyy'),            
-                        cpf: doc.data().cpf,
-                        cep: doc.data().cep,
-                        endereco: doc.data().cep + " ," + doc.data().estado + " ," + doc.data().cidade +
-                        " ," + doc.data().bairro + " ," + doc.data().logradouro + " ," + doc.data().numero,
-                        genero: doc.data().gender
+                        nome: doc.nome,
+                        email: doc.email,
+                        nascimento: format(parseISO(doc.nascimento), 'dd/MM/yyyy'),            
+                        cpf: doc.cpf,
+                        cep: doc.cep,
+                        endereco: doc.cep + " ," + doc.estado + " ," + doc.cidade +
+                        " ," + doc.bairro + " ," + doc.logradouro + " ," + doc.numero,
+                        genero: doc.genero
                     })
                 });
                 setListaClientes(clientes =>[...clientes, ...lista ])              
-            }
-            
+            }           
         }
+        
 
         const actionBodyTemplate = (e) => {          
                 return <span className="p-buttonset">     
@@ -94,13 +97,17 @@ function MainPage() {
             }
     
         async function deleteClient(id) {
-            const docRef = doc(db, "clientes", id)
-            await deleteDoc(docRef)
-            window.location.reload()
+            fetch(`http://localhost:8080/clientes/${id}`, {
+                method:"delete"
+            }).then(()=> {
+                window.location.reload()
+            }).catch((error)=> {
+                console.log(error)
+            })
         }
 
         async function editData() {
-            setShowModal(true)         
+            setShowModal(true)
         }
 
         const onGlobalFilterChange = (e) => {
@@ -141,7 +148,7 @@ function MainPage() {
                 <div className='buttonInclude'>
                     <Button onClick={handleOpenModal} style={{backgroundColor: '#85bb65'}} severity='Sucess' size="normal" label="incluir" icon="pi pi-user-plus" />
                 </div>
-            </div>         
+            </div> 
             {showModal && (<Modal close={()=> setShowModal(false)}/>) }
             
         </div>
